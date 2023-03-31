@@ -1,27 +1,27 @@
-microk8s.kubectl  get deployments kuard \
+kubectl  get deployments kuard \
 -o jsonpath --template {.spec.selector.matchLabels}
 
-microk8s.kubectl  get replicasets --selector=run=kuard
+kubectl  get replicasets --selector=run=kuard
 
-microk8s.kubectl  scale deployments kuard --replicas=2
+kubectl  scale deployments kuard --replicas=2
 
-microk8s.kubectl  get replicasets --selector=run=kuard
+kubectl  get replicasets --selector=run=kuard
 
-microk8s.kubectl  scale replicasets kuard-1128242161 --replicas=1 (Deployment managed ReplicaSet !!!)
+kubectl  scale replicasets kuard-1128242161 --replicas=1 (Deployment managed ReplicaSet !!!)
 
-microk8s.kubectl  get replicasets --selector=run=kuard
+kubectl  get replicasets --selector=run=kuard
 
 ----
-microk8s.kubectl  get deployments kuard --export -o yaml >  first-deployment.yaml
+kubectl  get deployments kuard --export -o yaml >  first-deployment.yaml
 
-microk8s.kubectl  replace -f  first-deployment.yaml --save-config
+kubectl  replace -f  first-deployment.yaml --save-config
 You also need to run kubectl replace --save-config. This adds an annotation so
 that, when applying changes in the future, kubectl will know what the last applied
 configuration was for smarter merging of configs. If you always use kubectl apply,
 this step is only required after the first time you create a deployment using kubectl
 create -f
 ---
-microk8s.kubectl  describe deployments kuard
+kubectl  describe deployments kuard
 
 Two of the most important pieces of information in the output are
 OldReplicaSets and NewReplicaSet. These fields point to the
@@ -29,13 +29,13 @@ ReplicaSet objects this deployment is currently managing. If a deployment
 is in the middle of a rollout, both fields will be set to a value. If a rollout is
 complete, OldReplicaSets will be set to <none>.
 ---
-microk8s.kubectl  rollout history deployment kuard
-microk8s.kubectl  rollout status  deployment kuard
+kubectl  rollout history deployment kuard
+kubectl  rollout status  deployment kuard
 ===
 Updating Deployment
 	change in YAML to 3 and apply
 
-microk8s.kubectl  apply -f  first-deployment.yaml
+kubectl  apply -f  first-deployment.yaml
 ----
 Updating a Container Image
 	gcr.io/kuar-demo/kuard-amd64:green
@@ -51,12 +51,12 @@ template:
     annotations:
       kubernetes.io/change-cause: "Update to green kuard"
 …
-microk8s.kubectl  apply -f  first-deployment.yaml
-microk8s.kubectl  rollout status deployments kuard
-microk8s.kubectl  get replicasets -o wide
+kubectl  apply -f  first-deployment.yaml
+kubectl  rollout status deployments kuard
+kubectl  get replicasets -o wide
 
- microk8s.kubectl  rollout history deployment kuard --revision=3
- microk8s.kubectl  rollout undo deployments kuard --to-revision=2
+ kubectl  rollout history deployment kuard --revision=3
+ kubectl  rollout undo deployments kuard --to-revision=2
 
 ---
 
