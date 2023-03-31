@@ -37,8 +37,8 @@ $ kubectl expose deployment nginx --name nginxclusterip --port=80  --target-port
 ```
 To test our case we need to run DNS queries and curl command. arunvelsriram/utils contains all the tool that we need.
 ```
-$ kubectl run --generator=run-pod/v1 --rm utils -it --image arunvelsriram/utils bash
-
+$ kubectl run utils --image arunvelsriram/utils 
+$ kubectl exec -it utils bash
 $ host nginxheadless
 ```
 As you can see above, host nginxheadless query returns Pods IP list in the response. Let’s curl to this service name.
