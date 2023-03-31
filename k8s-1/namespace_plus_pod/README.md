@@ -5,7 +5,7 @@ Create Namespace + runnig pod + set context + delete namespace, intro to kubectl
 
     $ kubectl get namespace
 
-    $ kubectl run  --generator=run-pod/v1 kuard --image=gcr.io/kuar-demo/kuard-amd64:1 -n development
+    $ kubectl run kuard  --image=gcr.io/kuar-demo/kuard-amd64:1 -n development
 
     $ kubectl get pods -n development
 
