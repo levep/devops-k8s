@@ -1,95 +1,98 @@
-kubectl  get deployments kuard \
--o jsonpath --template {.spec.selector.matchLabels}
-
-kubectl  get replicasets --selector=run=kuard
-
-kubectl  scale deployments kuard --replicas=2
-
-kubectl  get replicasets --selector=run=kuard
-
-kubectl  scale replicasets kuard-1128242161 --replicas=1 (Deployment managed ReplicaSet !!!)
-
-kubectl  get replicasets --selector=run=kuard
-
-----
-kubectl  get deployments kuard --export -o yaml >  first-deployment.yaml
-
-kubectl  replace -f  first-deployment.yaml --save-config
-You also need to run kubectl replace --save-config. This adds an annotation so
-that, when applying changes in the future, kubectl will know what the last applied
-configuration was for smarter merging of configs. If you always use kubectl apply,
-this step is only required after the first time you create a deployment using kubectl
-create -f
+# K8S Deployments
+## Creating Deployment
+```  
+  kubectl apply -f first-deployment.yaml
+```
+### Get details of your Deployment
+```
+  kubectl describe deployments
+```
 ---
-kubectl  describe deployments kuard
+## Updating Deployment
+```
+  kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+```
+### or use the following command
+```
+  kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
+```
 
-Two of the most important pieces of information in the output are
-OldReplicaSets and NewReplicaSet. These fields point to the
-ReplicaSet objects this deployment is currently managing. If a deployment
-is in the middle of a rollout, both fields will be set to a value. If a rollout is
-complete, OldReplicaSets will be set to <none>.
+### To see the rollout status, run
+```
+  kubectl rollout status deployment/nginx-deployment
+```
+
+### Get details of your Deployment
+```
+  kubectl describe deployments
+```
 ---
-kubectl  rollout history deployment kuard
-kubectl  rollout status  deployment kuard
-===
-Updating Deployment
-	change in YAML to 3 and apply
+### Checking Rollout History of a Deployment
+```
+  kubectl rollout history deployment/nginx-deployment
+```
 
-kubectl  apply -f  first-deployment.yaml
-----
-Updating a Container Image
-	gcr.io/kuar-demo/kuard-amd64:green
-	imagePullPolicy: Always
+### To see the details of each revision, run
+```
+  kubectl rollout history deployment/nginx-deployment --revision=2
+  kubectl rollout history deployment/nginx-deployment --revision=1
+```
+### Rolling Back to a Previous Revision
+```
+  kubectl rollout undo deployment/nginx-deployment
+```
 
-We are also going to put an annotation in the template for the deployment
-to record some information about the update:
-...
-spec:
-...
-template:
-  metadata:
-    annotations:
-      kubernetes.io/change-cause: "Update to green kuard"
-…
-kubectl  apply -f  first-deployment.yaml
-kubectl  rollout status deployments kuard
-kubectl  get replicasets -o wide
+### Alternatively, you can rollback to a specific revision by specifying it with --to-revision
 
- kubectl  rollout history deployment kuard --revision=3
- kubectl  rollout undo deployments kuard --to-revision=2
-
+```
+  kubectl rollout undo deployment/nginx-deployment --to-revision=2
+```
 ---
+### Scaling a Deployment
+```
+  kubectl scale deployment/nginx-deployment --replicas=10
+```
 
-Recreate Strategy
-The Recreate strategy is the simpler of the two rollout strategies. It
-simply updates the ReplicaSet it manages to use the new image and
-terminates all of the Pods associated with the deployment. The ReplicaSet
-notices that it no longer has any replicas, and re-creates all Pods using the
-new image. Once the Pods are re-created, they are running the new
-version.
-While this strategy is fast and simple, it has one major drawback—it is
-potentially catastrophic, and will almost certainly result in some site
-downtime. Because of this, the Recreate strategy should only be used for
-test deployments where a service is not user-facing and a small amount of
-downtime is acceptable.
+### Proportional scaling
+- For example, you are running a Deployment with 10 replicas, maxSurge=3, and maxUnavailable=2.
 
-RollingUpdate Strategy
-The RollingUpdate strategy is the generally preferable strategy for any
-user-facing service. While it is slower than Recreate, it is also
-significantly more sophisticated and robust. Using RollingUpdate, you
-can roll out a new version of your service while it is still receiving user
-traffic, without any downtime.
-As you might infer from the name, the RollingUpdate strategy works by
-updating a few Pods at a time, moving incrementally until all of the Pods
-are running the new version of your software.
-RollingUpdate is a fairly generic strategy; it can be used to update a
-variety of applications in a variety of settings. Consequently, the rolling
-update itself is quite configurable; you can tune its behavior to suit your
-particular needs. There are two parameters you can use to tune the rolling
-update behavior: maxUnavailable and maxSurge.
-The maxUnavailable parameter sets the maximum number of Pods that
-can be unavailable during a rolling update. It can either be set to an
-absolute number (e.g., 3, meaning a maximum of three Pods can be
-unavailable) or to a percentage (e.g., 20%, meaning a maximum of 20% of
-the desired number of replicas can be unavailable).
 
+```
+  kubectl set image deployment/nginx-deployment nginx=nginx:sometag
+  kubectl get rs
+  kubectl get pods
+  kubectl get deploy
+  kubectl rollout undo deployment/nginx-deployment
+```
+---
+### Pausing and Resuming a rollout of a Deployment
+- RollingUpdate Deployments support running multiple versions of an application at the same time. When you or an autoscaler scales a RollingUpdate Deployment that is in the middle of a rollout (either in progress or paused), the Deployment controller balances the additional replicas in the existing active ReplicaSets (ReplicaSets with Pods) in order to mitigate risk. This is called proportional scaling.
+```
+  kubectl rollout pause deployment/nginx-deployment
+  kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1
+```
+
+#### Notice that no new rollout started
+```
+  kubectl rollout history deployment/nginx-deployment
+```
+#### You can make as many updates as you wish, for example, update the resources that will be used
+
+```
+  kubectl set resources deployment/nginx-deployment -c=nginx --limits=cpu=200m,memory=512Mi
+```
+
+#### Eventually, resume the Deployment rollout and observe a new ReplicaSet coming up with all the new updates
+```
+  kubectl rollout resume deployment/nginx-deployment
+```
+
+#### Watch the status of the rollout until it's done
+```
+  kubectl get rs -w
+```
+---
+#### Clean resources
+```
+  kubectl delete -f first-deployment.yaml
+```
