@@ -1,26 +1,13 @@
-kubectl run alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:1 --replicas=3 --port=8080 --labels="ver=1,app=alpaca,env=prod"
+### Let's create deployment
+```
+    kubectl create deployment nginx --image=nginx
+    kubectl get deploy nginx
+    kubectl get pod
+```
 
-kubectl expose deployment alpaca-prod
-
-kubectl run bandicoot-prod --image=gcr.io/kuar-demo/kuard-amd64:2 --replicas=2 --port=8080 --labels="ver=2,app=bandicoot,env=prod"
-
-kubectl expose deployment bandicoot-prod
-
-kubectl get services -o wide
-
-== NodePort
-
-kubectl edit service alpaca-prod
-
-""Change the spec.type field to NodePort.
-
-kubectl get services -o wide
-
-in browser <>:<port of NodePort service>
-
-== LoadBalancer
-
-kubectl edit service alpaca-prod
-
-""Change the spec.type field to LoadBalancer.
-
+### let's create 3 services review and compare them
+```
+    kubectl apply -f nginx-svc.yaml
+    kubectl apply -f nginx-svc-nodeport.yaml
+    kubectl apply -f nginx-svc-loadbalancer.yaml
+```
