@@ -148,8 +148,8 @@ spec:
           mountPath: /etc/mysql/conf.d
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 500m
+            memory: 256Mi
       volumes:
       - name: conf
         emptyDir: {}
@@ -163,4 +163,5 @@ spec:
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 10Gi
+          storage: 3Gi
+      storageClassName: linode-block-storage-retain
