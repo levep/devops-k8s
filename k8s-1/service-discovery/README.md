@@ -11,3 +11,7 @@
     kubectl apply -f nginx-svc-nodeport.yaml
     kubectl apply -f nginx-svc-loadbalancer.yaml
 ```
+---
+```
+kubectl get svc
+```
