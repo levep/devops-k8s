@@ -8,6 +8,9 @@ kubectl create configmap my-config --from-file=simple-config.txt --from-literal=
 ### Let's explore it
 ```
 kubectl get configmaps my-config -o yaml
-
+kubectl apply -f kuard-config.yaml
 kubectl port-forward kuard-config 8080
 ```
+
+### For more info
+### https://kubernetes.io/docs/concepts/configuration/configmap/
