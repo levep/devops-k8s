@@ -15,7 +15,7 @@ Scaling ReplicaSets
     are submitted to the Kubernetes API using the Pod template defined on the
     ReplicaSet.
 
-    kubectl scale kuard --replicas=4
+    kubectl scale rs kuard --replicas=4
 
 
     Declaratively Scaling with kubectl apply

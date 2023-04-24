@@ -57,5 +57,14 @@ cd devops-k8s/k8s-2/StatefulSet/casandra
 kubectl apply -f .
 
 ```
+---
+### Optional MySQL deploy
+```
+cd devops-k8s/k8s-2/StatefulSet/mysql
+```
+#### review yamls
+```
+kubectl apply -f .
+```
 
 ### Clean all statefulsets and volumes
