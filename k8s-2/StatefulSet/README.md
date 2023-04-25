@@ -26,7 +26,7 @@ kubectl scale sts web --replicas=5
 ```
 --- 
 kubectl delete sts web
-kubectl delete sts web --cascade=false
+kubectl delete sts web 
 
 # Headless service
 When you create a headless service by setting clusterIP None, no load-balancing is done and no cluster IP is allocated for this service. Only DNS is automatically configured. When you run a DNS query for headless service, you will get the list of the Pods IPs and usually client dns chooses the first DNS record.
