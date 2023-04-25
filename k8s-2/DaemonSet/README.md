@@ -6,7 +6,7 @@ kubectl apply -f fluentd.yaml
 
 kubectl describe daemonset fluentd
 
-kubectl get pods -o wide
+kubectl get pods -n kube-system -o wide
 ```
 
 Limiting DaemonSets to Specific Nodes
