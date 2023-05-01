@@ -22,7 +22,6 @@ helm status mysql-1682664088
 ```
 
 ### Uninstall a Release
-
 ```
 helm uninstall mysql-1682664088
 ```
@@ -36,44 +35,55 @@ cd mysql
 ---
 ---
 
-## Helm Chart creation - step by step
-
-### Let's create/explore simple chart
-### review directory stracture, Chart.yaml and templates files
+## In this tutorial we will create simple helm chart - hello-world.
 ```
 cd hello-world
 ```
+### review directory stracture, Chart.yaml and files in templates directory 
+### execute:
 
-### Let's explore output yamls 
 ```
 helm install hello-world .  --debug  --dry-run
 ```
+### explore output yamls 
+---
 
-### templating image
-### review directory stracture, Chart.yaml and templates files
+### Let's start by templating image
 ```
 cd hello-world2
-helm install hello-world .  --debug  --dry-run
 ```
-
-### templating tags
-### review directory stracture, Chart.yaml and templates files
+### review values.yaml, and deployment.yaml (image value on line 17 comming from values.yaml, repository:tag)
 ```
-cd hello-world3
-helm install hello-world .  --debug  --dry-run
-```
-
-### tpl functions
-### review directory stracture, Chart.yaml and templates files
-```
-cd hello-world4
 helm install hello-world .  --debug  --dry-run
 ```
 ---
-### Let's create Helm Chart with helm utility 
-### review directory stracture, Chart.yaml and templates files
+### Next, let's templating tags.
+```
+cd hello-world3
+```
+### review deployment.yaml, and execute
+```
+helm install -g .  --debug  --dry-run
+```
+### explore output yamls, pay attention to labels where the values come from?
+---
+### finaly let's make our deployment more robust and generic by adding tpl functions
+
+```
+cd hello-world4
+```
+### review _helpers.tpl and deployment.yaml
+```
+helm install -g .  --debug  --dry-run
+```
+### explore output yamls
+---
+---
+### Finally let's create template Helm Chart with helm utility 
+
 ```
 helm create my-chart 
 cd my-chart
 helm install my-chart .  --debug  --dry-run
 ```
+### Take time to review directory stracture, Chart.yaml, values.yaml and  files in templates directory
