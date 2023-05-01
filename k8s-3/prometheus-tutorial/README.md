@@ -1,4 +1,4 @@
-# Prometheus
+# Prometheus installation
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
@@ -8,6 +8,19 @@ helm install my-monitoring prometheus-community/kube-prometheus-stack
 
 ```
 
+### Let's start by review kube-state metrics
+```
+kubectl port-forward --address 0.0.0.0 svc/my-monitoring-kube-state-metrics 8080:8080
+```
+### in browser localhost:8080, explore metrics
+---
+### Next let's port-forward and explore prometheus UI
+```
+kubectl port-forward --address 0.0.0.0 svc/my-monitoring-kube-prometh-prometheus 8080:9090
+```
+### in browser localhost:8080, go to Status, explore Service Discovery, Targets, Rules and Configuration tabs 
+
+---
 ### Explore values.yaml
 ```
 helm pull prometheus-community/kube-prometheus-stack
@@ -17,10 +30,7 @@ cd kube-prometheus-stack
 ### Take time to review values.yaml
 
 
-### Let's expose grafana via NodePort, change ClusterIP to NodePort:
-```
-kubectl edit svc my-monitoring-grafana
-```
+
 
 ### Uninstall prometheus:
 ```
