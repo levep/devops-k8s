@@ -50,15 +50,9 @@ kubectl run -i --tty --rm --image busybox:1.28 bash
 nslookup nginxheadless
 nslookup nginxclusterip
 ```
----
-### Optional Casandra deploy
-```
-cd devops-k8s/k8s-2/StatefulSet/casandra
-kubectl apply -f .
 
-```
 ---
-### Optional MySQL deploy
+###  MySQL deploy
 ```
 cd devops-k8s/k8s-2/StatefulSet/mysql
 ```
