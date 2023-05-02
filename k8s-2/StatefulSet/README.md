@@ -81,4 +81,26 @@ kubectl run mysql-client-loop --image=mysql:5.7 -i -t --rm --restart=Never --\
   bash -ic "while sleep 1; do mysql -h mysql-read -e 'SELECT @@server_id,NOW()'; done"
 ```
 
+### When you use MySQL replication, you can scale your read query capacity by adding replicas. For a StatefulSet, you can achieve this with a single command:
+```
+kubectl scale statefulset mysql  --replicas=5
+```
+### Watch the new Pods come up by running:
+```
+kubectl get pods -l app=mysql --watch
+```
+
+### Once they're up, you should see server IDs 103 and 104 start appearing in the SELECT @@server_id loop output.
+### You can also verify that these new servers have the data you added before they existed:
+```
+kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never --\
+  mysql -h mysql-3.mysql -e "SELECT * FROM test.messages"
+```
+
+### Scaling back down is also seamless:
+```
+kubectl scale statefulset mysql --replicas=3
+```
 ### Clean all statefulsets and volumes
+### Although scaling up creates new PersistentVolumeClaims automatically, scaling down does not automatically delete these PVCs.
+### Delete all PVC, PV and volumes 
