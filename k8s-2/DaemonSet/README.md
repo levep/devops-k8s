@@ -4,7 +4,7 @@
 ```
 kubectl apply -f fluentd.yaml
 
-kubectl describe daemonset fluentd
+kubectl describe daemonset fluentd -n kube-system
 
 kubectl get pods -n kube-system -o wide
 ```
