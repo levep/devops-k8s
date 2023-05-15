@@ -11,10 +11,12 @@ kubectl logs <POD name>
 kubectl delete -f controlers-job.yaml
 ```
 
+### Example of key generator one shot 
 ```
 kubectl apply -f job-oneshot.yaml
 ```
 
+### Example of key generator parallel 
 ```
 kubectl apply -f parallel.yaml
 ```
