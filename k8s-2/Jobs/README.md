@@ -18,7 +18,7 @@ kubectl apply -f job-oneshot.yaml
 
 ### Example of key generator parallel 
 ```
-kubectl apply -f parallel.yaml
+kubectl apply -f job-parallel.yaml
 ```
 
 ```
