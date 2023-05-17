@@ -5,14 +5,11 @@
 ### Initialize a Helm Chart Repository
 ```
 helm repo add bitnami https://charts.bitnami.com/bitnami
-
+helm repo update              # Make sure we get the latest list of charts
 helm search repo bitnami
 ```
 
-### Install an Example Chart
-```
-helm repo update              # Make sure we get the latest list of charts
-```
+
 ### We can see default values by typing
 ```
 helm show values bitnami/mysql 
