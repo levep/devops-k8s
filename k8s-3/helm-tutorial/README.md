@@ -12,9 +12,17 @@ helm search repo bitnami
 ### Install an Example Chart
 ```
 helm repo update              # Make sure we get the latest list of charts
-
+```
+### We can see default values by typing
+```
+helm show values bitnami/mysql 
+```
+### We can rewrite values via command line helm install --set param=value
+### or to pass file helm install --values app1.yaml
+```
 helm install bitnami/mysql --generate-name
 ```
+
 ### Learn About Releases
 ```
 helm list

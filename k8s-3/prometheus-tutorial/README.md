@@ -5,7 +5,7 @@ helm repo update
 ```
 ```
 helm install my-monitoring prometheus-community/kube-prometheus-stack
-
+kubectl get all
 ```
 
 ### Let's start by review kube-state metrics
