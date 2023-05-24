@@ -10,6 +10,7 @@ helm install my-monitoring prometheus-community/kube-prometheus-stack
 ```
 kubectl get all
 kubectl get cm
+kubectl get secrets
 ```
 ### Let's start by review kube-state metrics
 ```
@@ -22,12 +23,13 @@ kubectl port-forward --address 0.0.0.0 svc/my-monitoring-kube-state-metrics 8080
 kubectl port-forward --address 0.0.0.0 svc/my-monitoring-kube-prometh-prometheus 8080:9090
 ```
 ### in browser localhost:8080, go to Status, explore Service Discovery, Targets, Rules and Configuration tabs 
-
+### execute PromQL examples queries https://prometheus.io/docs/prometheus/latest/getting_started/#using-the-expression-browser
 
 ```
 kubectl port-forward --address 0.0.0.0 svc/my-monitoring-grafana 8081:80
 ```
 ### User/Password: admin/prom-operator
+### Explore dashboards, Grafana configuration etc,.
 ### Query example from Kubernetes/Compute Resources dashboard, "Rate of Transmitted Packets", execute on Prometheus UI
 ```
 (sum(irate(container_network_transmit_bytes_total{job="kubelet", metrics_path="/metrics/cadvisor", cluster="$cluster", namespace="default"}[1m]) * on (namespace,pod) group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload=~".+"}) by (workload))
