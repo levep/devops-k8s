@@ -1,13 +1,14 @@
 # Istio
 
 
-### Let's start by installing istio and application:
+### Let's start by installing istio and application https://istio.io/latest/docs/setup/getting-started/
 
 ```
 curl -L https://istio.io/downloadIstio | sh -
 cd istio-1.17.2/
 export PATH=$PWD/bin:$PATH
-istioctl install
+istioctl install --set profile=demo -y
+kubectl label namespace default istio-injection=enabled
 ```
 ### Explore Istio installation in istio-system namespace
 ### port-forward grafana explore dashboards
