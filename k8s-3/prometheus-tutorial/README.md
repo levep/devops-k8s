@@ -5,9 +5,12 @@ helm repo update
 ```
 ```
 helm install my-monitoring prometheus-community/kube-prometheus-stack
-kubectl get all
 ```
-
+### Explore installation components
+```
+kubectl get all
+kubectl get cm
+```
 ### Let's start by review kube-state metrics
 ```
 kubectl port-forward --address 0.0.0.0 svc/my-monitoring-kube-state-metrics 8080:8080
