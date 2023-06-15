@@ -32,7 +32,7 @@ kubectl port-forward --address 0.0.0.0 svc/my-monitoring-grafana 8081:80
 ### Explore dashboards, Grafana configuration etc,.
 ### Query example from Kubernetes/Compute Resources dashboard, "Rate of Transmitted Packets", execute on Prometheus UI
 ```
-(sum(irate(container_network_transmit_bytes_total{job="kubelet", metrics_path="/metrics/cadvisor", cluster="$cluster", namespace="default"}[1m]) * on (namespace,pod) group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload=~".+"}) by (workload))
+(sum(irate(container_network_transmit_bytes_total{job="kubelet", metrics_path="/metrics/cadvisor", namespace="default"}[1m]) * on (namespace,pod) group_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{namespace="default", workload=~".+"}) by (workload))
 ```
 ---
 ### Explore values.yaml

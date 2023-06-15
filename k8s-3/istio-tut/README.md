@@ -1,7 +1,7 @@
 # Istio
 
 
-### Let's start by installing istio and application https://istio.io/latest/docs/setup/getting-started/
+### Let's start by installing istio and applicatiogetting-started/
 
 ```
 curl -L https://istio.io/downloadIstio | sh -
