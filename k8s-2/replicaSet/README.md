@@ -6,7 +6,6 @@ kubectl describe rs kuard
 
 kubectl get pods <pod-name> -o yaml
 
-kubectl get pods -l app=kuard,version=2
 
 
 Scaling ReplicaSets
