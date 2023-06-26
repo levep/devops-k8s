@@ -113,7 +113,7 @@ kubectl get svc cassandra
 ```
 #### Using a StatefulSet to create a Cassandra ring
 ```
-kubectl apply -f casandra-svc.yaml
+kubectl apply -f casandra-sts.yaml
 kubectl get pods -w
 ```
 #### Validating the Cassandra StatefulSet
