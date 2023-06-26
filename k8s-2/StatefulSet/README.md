@@ -104,3 +104,35 @@ kubectl scale statefulset mysql --replicas=3
 ### Clean all statefulsets and volumes
 ### Although scaling up creates new PersistentVolumeClaims automatically, scaling down does not automatically delete these PVCs.
 ### Delete all PVC, PV and volumes 
+---
+### Deploying Casandra
+```
+cd casandra
+kubectl apply -f casandra-svc.yaml
+kubectl get svc cassandra
+```
+#### Using a StatefulSet to create a Cassandra ring
+```
+kubectl apply -f casandra-svc.yaml
+kubectl get pods -w
+```
+#### Validating the Cassandra StatefulSet
+```
+kubectl get statefulset cassandra
+```
+#### Run the Cassandra nodetool inside the first Pod, to display the status of the ring.
+```
+kubectl exec -it cassandra-0 -- nodetool status
+```
+#### Modifying the Cassandra StatefulSet. Change the number of replicas to 4 
+```
+kubectl edit statefulset cassandra
+```
+### Get the Cassandra StatefulSet to verify your change:
+```
+kubectl get statefulset cassandra
+```
+---
+### Running ZooKeeper as StatefullSet. (Pod disruption budgets)
+#### please follow tutorial on: https://kubernetes.io/docs/tutorials/stateful-application/zookeeper/
+

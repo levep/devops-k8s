@@ -1,4 +1,4 @@
-kubectl apply -f kuard-rs.yaml
+kubectl apply -f kuard-rs.yml
 
 kubectl get pods
 
