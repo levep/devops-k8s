@@ -36,6 +36,8 @@ helm uninstall mysql-1682664088
 helm pull bitnami/mysql --untar
 cd mysql
 ```
+### Set root password and deploy chart, see: https://helm.sh/docs/helm/helm_install/
+
 ### Review README.md, default and optional values.
 ---
 ---
