@@ -26,3 +26,15 @@ kubectl port-forward -n istio-system svc/kiali 9090:20001
 
 ### check istio envoy proxy, describe one of the pod
 ### explore observability in kiali (port-forwarded previously) 
+---
+
+## Traffic Management
+### https://istio.io/latest/docs/concepts/traffic-management/
+
+### Task 1: Request Routing
+### https://istio.io/latest/docs/tasks/traffic-management/request-routing/
+
+### Task 2: Traffic Shifting
+### https://istio.io/latest/docs/tasks/traffic-management/traffic-shifting/
+
+
